@@ -11,19 +11,22 @@
 </head>
 <body>
   <a class="skip-link" href="#works">跳转到作品</a>
+  <div class="page-progress" aria-hidden="true"><span class="page-progress-line"></span><i></i></div>
   <header class="navigation"><a class="brand" href="#home" aria-label="罗昊，返回首页">罗昊</a><nav aria-label="主导航"><a href="#works">WORKS</a><a href="#about">ABOUT</a><a href="#contact">CONTACT</a></nav></header>
   <main>
     <section class="hero" id="home" aria-labelledby="hero-title">
       <div class="hero-art" aria-hidden="true"></div><div class="hero-shade" aria-hidden="true"></div>
-      <div class="registration" aria-hidden="true"><i></i></div><span class="hero-rule" aria-hidden="true"></span>
+      <span class="hero-rule" aria-hidden="true"></span>
       <div class="hero-type"><h1 id="hero-title">罗昊<span>.</span></h1><p class="outline">PORTFOLIO</p></div>
       <div class="hero-bottom"><div class="intro"><p>创意短片 · 内容营销 · 平面与 H5</p><span>LUO HAO · SELECTED WORKS</span></div><div class="hero-actions"><a class="button light" href="#sequence">VIEW SEQUENCE <span>→</span></a><button class="button ghost" id="showreel">⊙ &nbsp; SHOWREEL</button></div></div>
       <a class="scroll-mark" href="#sequence" aria-label="向下查看作品">↓</a>
     </section>
-    <section class="sequence section-pad" id="sequence" aria-labelledby="sequence-title">
-      <div class="section-top"><span class="label" id="sequence-title">SELECTED SEQUENCE</span><span class="label">01 — 03</span></div>
-      <div class="sequence-stage"><div class="frame-guides" aria-hidden="true"></div><span class="stage-word" aria-hidden="true">FRAME <b id="frame-number">01</b></span><span class="empty-cross" aria-hidden="true">+</span><span class="stage-empty">作品影像待添加</span><div class="stage-caption"><div><span class="label" id="sequence-english">CREATIVE FILMS</span><h2 id="sequence-name">创意短片</h2></div><button class="button light" id="sequence-explore">EXPLORE <span>↗</span></button></div></div>
-      <div class="sequence-controls"><div class="sequence-tabs" role="tablist" aria-label="精选作品类别"><button role="tab" aria-selected="true" data-sequence="film"><span>01</span>创意短片</button><button role="tab" aria-selected="false" data-sequence="content"><span>02</span>内容营销</button><button role="tab" aria-selected="false" data-sequence="design"><span>03</span>平面与 H5</button></div><div class="arrows"><button id="previous" aria-label="上一个类别">←</button><button id="next" aria-label="下一个类别">→</button></div></div>
+    <section class="sequence" id="sequence" aria-labelledby="sequence-title">
+      <div class="sequence-sticky section-pad">
+        <div class="section-top"><span class="label" id="sequence-title">SELECTED SEQUENCE</span><span class="label"><b id="sequence-current">01</b> — 03</span></div>
+        <div class="sequence-stage"><div class="frame-guides" aria-hidden="true"></div><span class="stage-word" aria-hidden="true">FRAME <b id="frame-number">01</b></span><span class="empty-cross" aria-hidden="true">+</span><span class="stage-empty">作品影像待添加</span><div class="stage-caption"><div><span class="label" id="sequence-english">CREATIVE FILMS</span><h2 id="sequence-name">创意短片</h2></div><button class="button light" id="sequence-explore">EXPLORE <span>↗</span></button></div></div>
+        <div class="sequence-controls"><div class="sequence-tabs" role="tablist" aria-label="精选作品类别"><button role="tab" aria-selected="true" data-sequence="film"><span>01</span>创意短片</button><button role="tab" aria-selected="false" data-sequence="content"><span>02</span>内容营销</button><button role="tab" aria-selected="false" data-sequence="design"><span>03</span>平面与 H5</button></div><div class="arrows"><button id="previous" aria-label="上一个类别">←</button><button id="next" aria-label="下一个类别">→</button></div></div>
+      </div>
     </section>
     <section class="archive section-pad" id="works" aria-labelledby="archive-title"><div class="archive-heading"><h2 id="archive-title">WORK ARCHIVE<span class="small-dot">.</span></h2><p class="label">A SPACE FOR IDEAS.<br>A PLACE FOR WHAT'S NEXT.</p></div>
       <div class="archive-bar"><div class="filters" role="group" aria-label="筛选作品"><button class="active" data-filter="all" aria-pressed="true">全部 <span>ALL</span></button><button data-filter="film" aria-pressed="false">创意短片 <span>01</span></button><button data-filter="content" aria-pressed="false">内容营销 <span>02</span></button><button data-filter="design" aria-pressed="false">平面与 H5 <span>03</span></button></div><span class="label archive-count" id="archive-count" aria-live="polite">09 PROJECT SPACES</span></div>
