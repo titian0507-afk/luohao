@@ -1,6 +1,6 @@
 # 罗昊 · Portfolio
 
-黑白胶片风个人作品集，按 **创意短片 / 内容营销 / 平面与 H5** 分类。参考用户提供的截图与录屏进行网页风格复刻；首页姓名为罗昊。作品、个人照片、简介、邮箱、微信及 Showreel 均保留占位，没有使用参考网站中的他人案例作为个人作品。
+黑白胶片风个人作品集，按 **访谈 / 短视频 / 平面与H5** 分类。作品来自用户提供的本地「罗昊作品集」文件夹；个人照片、简介、邮箱和微信仍保留占位。Showreel 按钮可重新播放现有开场影片。
 
 ## 预览
 
@@ -14,24 +14,26 @@ python -m http.server 4173
 
 ## 填写内容
 
-编辑 `content.js`，每类预设三个空作品位，可继续增删 `projects` 条目。
+编辑 `content.js` 中的 `projects` 条目。视频标题使用原文件名，可直接改成正式标题；`frameTitles` 可逐条填写关键分镜标题。
 
 ```js
-{ id: 'film-01', category: 'film', title: '你的项目名称',
-  image: 'assets/cover.jpg', video: 'assets/film.mp4',
-  description: '项目介绍、职责和创作过程。' }
+{ id: 'interview-01', category: 'interview', kind: 'video', title: '视频标题',
+  image: 'assets/works/interview-01-shot-02.jpg',
+  video: 'assets/works/interview-01.mp4',
+  frames: ['assets/works/interview-01-shot-01.jpg'],
+  frameTitles: ['分镜标题'] }
 ```
 
-- `category`：`film`（创意短片）、`content`（内容营销）、`design`（平面与 H5）。
-- `image`：封面路径。`video`：可选视频路径；有视频时详情页使用原生播放器。
+- `category`：`interview`（访谈）、`short`（短视频）、`design`（平面与H5）。
+- `kind`：`video`、`gallery` 或 `document`。`image` 是封面，`video` 是按需加载的视频，`gallery` 是平面图集，`document` 是可下载脚本。
 - 顶层 `bio` / `email` / `wechat` / `showreel`：个人简介、邮箱、微信号、作品集锦视频路径。
 - 个人照片：替换 `index.html` 中 `.portrait-placeholder` 的占位内容。
-- H5 项目可先填写项目介绍、截图或演示视频。
+- 视频详情页只显示标题、播放器、关键分镜和可用附件；平面作品显示画面网格。不生成未经提供的项目介绍。
 - 使用素材前，请确保拥有相应使用权。不要把账号密码或私密资料放进代码。
 
 ## 已实现
 
-打开网站时会静音自动播放 15 秒全屏开场视频，右上角可以切换声音或跳过；播放结束、跳过或无法播放时都会过渡到主页。首页还有大字、描边 PORTFOLIO、固定页面进度线、紧凑悬浮导航、标题惯性滚动、三屏锁定的精选序列轮播、2/3 张交替错位作品布局、三类筛选、作品详情弹窗、Showreel 占位、About、Contact、返回顶部、移动端适配、键盘焦点和减少动画偏好支持。
+打开网站时会静音自动播放全屏开场视频。作品视频由原文件优化为 H.264/AAC、faststart MP4，封面和关键分镜是静态帧，播放器只在打开详情后加载。原视频未改动；PSD 工作文件没有公开，脚本 DOCX 作为附件。鼠标设备使用白色镂空圆形光标，触屏保留原生操作。首页保留描边 PORTFOLIO、固定进度线、精选序列和错位作品布局。
 
 ## 视觉素材
 
