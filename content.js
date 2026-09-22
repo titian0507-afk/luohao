@@ -1,8 +1,8 @@
-// 作品素材来自本地作品集；视频为网页优化版。标题与分镜名称可继续编辑。
+// 作品素材来自本地作品集；视频为网页优化版。
 window.PORTFOLIO = {
   "bio": "",
-  "email": "",
-  "wechat": "",
+  "email": "titian0507@gmail.com",
+  "wechat": "titian1231",
   "showreel": "assets/intro.mp4",
   "categories": [
     {
@@ -40,9 +40,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": true,
-      "duration": "02:01"
+      "duration": "02:01",
+      "aspect": 0.5625,
+      "hoverImage": "assets/works/interview-01-shot-03.jpg"
     },
     {
       "id": "interview-02",
@@ -62,9 +63,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": false,
-      "duration": "00:43"
+      "duration": "00:43",
+      "aspect": 1.7778,
+      "hoverImage": "assets/works/interview-02-shot-03.jpg"
     },
     {
       "id": "interview-03",
@@ -84,9 +86,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": false,
-      "duration": "02:07"
+      "duration": "02:07",
+      "aspect": 1.7778,
+      "hoverImage": "assets/works/interview-03-shot-03.jpg"
     },
     {
       "id": "interview-04",
@@ -106,9 +109,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": false,
-      "duration": "03:17"
+      "duration": "03:17",
+      "aspect": 1.7778,
+      "hoverImage": "assets/works/interview-04-shot-03.jpg"
     },
     {
       "id": "interview-05",
@@ -128,9 +132,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": true,
-      "duration": "02:18"
+      "duration": "02:18",
+      "aspect": 0.5625,
+      "hoverImage": "assets/works/interview-05-shot-03.jpg"
     },
     {
       "id": "short-01",
@@ -150,9 +155,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "assets/documents/haoshi-storyboard.docx",
       "portrait": false,
-      "duration": "00:30"
+      "duration": "00:30",
+      "aspect": 1.7778,
+      "hoverImage": "assets/works/short-01-shot-03.jpg"
     },
     {
       "id": "short-02",
@@ -172,9 +178,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": false,
-      "duration": "00:48"
+      "duration": "00:48",
+      "aspect": 1.7792,
+      "hoverImage": "assets/works/short-02-shot-03.jpg"
     },
     {
       "id": "short-03",
@@ -194,9 +201,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": false,
-      "duration": "13:04"
+      "duration": "13:04",
+      "aspect": 1.7792,
+      "hoverImage": "assets/works/short-03-shot-03.jpg"
     },
     {
       "id": "short-04",
@@ -216,9 +224,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": false,
-      "duration": "07:50"
+      "duration": "07:50",
+      "aspect": 1.7792,
+      "hoverImage": "assets/works/short-04-shot-03.jpg"
     },
     {
       "id": "short-05",
@@ -238,9 +247,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": true,
-      "duration": "01:22"
+      "duration": "01:22",
+      "aspect": 0.5604,
+      "hoverImage": "assets/works/short-05-shot-03.jpg"
     },
     {
       "id": "short-06",
@@ -260,9 +270,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": true,
-      "duration": "01:52"
+      "duration": "01:52",
+      "aspect": 0.5625,
+      "hoverImage": "assets/works/short-06-shot-03.jpg"
     },
     {
       "id": "short-07",
@@ -282,9 +293,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": true,
-      "duration": "01:20"
+      "duration": "01:20",
+      "aspect": 0.5625,
+      "hoverImage": "assets/works/short-07-shot-03.jpg"
     },
     {
       "id": "short-08",
@@ -304,9 +316,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": true,
-      "duration": "02:31"
+      "duration": "02:31",
+      "aspect": 0.5625,
+      "hoverImage": "assets/works/short-08-shot-03.jpg"
     },
     {
       "id": "short-09",
@@ -326,9 +339,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": true,
-      "duration": "00:45"
+      "duration": "00:45",
+      "aspect": 0.5604,
+      "hoverImage": "assets/works/short-09-shot-03.jpg"
     },
     {
       "id": "short-10",
@@ -348,9 +362,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": true,
-      "duration": "01:10"
+      "duration": "01:10",
+      "aspect": 0.5604,
+      "hoverImage": "assets/works/short-10-shot-03.jpg"
     },
     {
       "id": "short-11",
@@ -370,9 +385,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": true,
-      "duration": "00:58"
+      "duration": "00:58",
+      "aspect": 0.5625,
+      "hoverImage": "assets/works/short-11-shot-03.jpg"
     },
     {
       "id": "short-12",
@@ -392,9 +408,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": false,
-      "duration": "00:15"
+      "duration": "00:15",
+      "aspect": 1.7778,
+      "hoverImage": "assets/works/short-12-shot-03.jpg"
     },
     {
       "id": "short-13",
@@ -414,9 +431,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": false,
-      "duration": "00:20"
+      "duration": "00:20",
+      "aspect": 1.7778,
+      "hoverImage": "assets/works/short-13-shot-03.jpg"
     },
     {
       "id": "short-14",
@@ -436,9 +454,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": false,
-      "duration": "01:40"
+      "duration": "01:40",
+      "aspect": 1.7792,
+      "hoverImage": "assets/works/short-14-shot-03.jpg"
     },
     {
       "id": "short-15",
@@ -458,9 +477,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": false,
-      "duration": "01:20"
+      "duration": "01:20",
+      "aspect": 1.7792,
+      "hoverImage": "assets/works/short-15-shot-03.jpg"
     },
     {
       "id": "short-16",
@@ -480,27 +500,17 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": false,
-      "duration": "00:09"
-    },
-    {
-      "id": "short-fangcun-script",
-      "category": "short",
-      "kind": "document",
-      "title": "方寸之间 · 脚本",
-      "image": "",
-      "video": "",
-      "frames": [],
-      "gallery": [],
-      "document": "assets/documents/fangcun-script.docx"
+      "duration": "00:09",
+      "aspect": 1.7778,
+      "hoverImage": "assets/works/short-16-shot-03.jpg"
     },
     {
       "id": "design-01",
       "category": "design",
       "kind": "video",
       "title": "校园招生宣传 H5",
-      "image": "assets/works/design-campus-10.webp",
+      "image": "assets/works/design-01-shot-02.jpg",
       "video": "assets/works/design-01.mp4",
       "frames": [
         "assets/works/design-01-shot-01.jpg",
@@ -524,9 +534,10 @@ window.PORTFOLIO = {
         "assets/works/design-campus-09.webp",
         "assets/works/design-campus-10.webp"
       ],
-      "document": "",
       "portrait": true,
-      "duration": "00:37"
+      "duration": "00:37",
+      "aspect": 0.5625,
+      "hoverImage": "assets/works/design-01-shot-03.jpg"
     },
     {
       "id": "design-02",
@@ -546,9 +557,10 @@ window.PORTFOLIO = {
         ""
       ],
       "gallery": [],
-      "document": "",
       "portrait": true,
-      "duration": "00:23"
+      "duration": "00:23",
+      "aspect": 0.45,
+      "hoverImage": "assets/works/design-02-shot-03.jpg"
     },
     {
       "id": "design-admission",
@@ -563,7 +575,8 @@ window.PORTFOLIO = {
         "assets/works/design-admission-02.webp",
         "assets/works/design-admission-03.webp"
       ],
-      "document": ""
+      "aspect": 0.75,
+      "hoverImage": "assets/works/design-admission-02.webp"
     },
     {
       "id": "design-brochure",
@@ -576,7 +589,7 @@ window.PORTFOLIO = {
       "gallery": [
         "assets/works/design-brochure-01.webp"
       ],
-      "document": ""
+      "aspect": 1.2561
     },
     {
       "id": "design-flower",
@@ -590,7 +603,8 @@ window.PORTFOLIO = {
         "assets/works/design-flower-01.webp",
         "assets/works/design-flower-02.webp"
       ],
-      "document": ""
+      "aspect": 1.1002,
+      "hoverImage": "assets/works/design-flower-02.webp"
     },
     {
       "id": "design-ip",
@@ -610,7 +624,8 @@ window.PORTFOLIO = {
         "assets/works/design-ip-07.webp",
         "assets/works/design-ip-08.webp"
       ],
-      "document": ""
+      "aspect": 0.7071,
+      "hoverImage": "assets/works/design-ip-02.webp"
     },
     {
       "id": "design-poster",
@@ -623,7 +638,7 @@ window.PORTFOLIO = {
       "gallery": [
         "assets/works/design-poster-01.webp"
       ],
-      "document": ""
+      "aspect": 2.546
     },
     {
       "id": "design-tissue",
@@ -637,7 +652,8 @@ window.PORTFOLIO = {
         "assets/works/design-tissue-01.webp",
         "assets/works/design-tissue-02.webp"
       ],
-      "document": ""
+      "aspect": 0.7071,
+      "hoverImage": "assets/works/design-tissue-02.webp"
     }
   ]
 };

@@ -16,7 +16,7 @@ function openProject(project) {
   const category = data.categories.find(c => c.id === project.category);
   $('#dialog-category').textContent = category ? category.english : 'SHOWREEL';
   $('#dialog-title').textContent = project.title || 'SHOWREEL';
-  $('.detail-overline').textContent = project.kind === 'gallery' ? 'VISUAL PROJECT / 作品标题' : project.kind === 'document' ? 'SCRIPT TITLE / 脚本标题' : 'VIDEO TITLE / 视频标题';
+  $('.detail-overline').textContent = project.kind === 'gallery' ? 'VISUAL PROJECT / 作品标题' : 'VIDEO TITLE / 视频标题';
   const container = $('#dialog-media'); container.replaceChildren();
   container.classList.toggle('is-portrait', Boolean(project.video && project.portrait));
   container.classList.toggle('is-gallery', project.kind === 'gallery');
@@ -25,7 +25,7 @@ function openProject(project) {
     if (project.image) player.poster = project.image;
     container.append(player);
   } else if (project.image) { const artwork = media(project.image); artwork.alt = project.title; container.append(artwork); }
-  else container.textContent = project.document ? '分镜脚本' : '影像待添加';
+  else container.textContent = '影像待添加';
 
   const shots = [
     ...(project.video ? (project.frames || []).map((source, index) => ({ source, kind: 'frame', index })) : []),
@@ -33,20 +33,18 @@ function openProject(project) {
   ];
   const grid = $('#shots-grid'); grid.replaceChildren();
   $('.detail-shots').hidden = shots.length === 0;
-  $('#detail-shots-label').textContent = project.video && project.gallery?.length ? 'KEY FRAMES & VISUALS / 关键分镜与画面' : project.video ? 'KEY FRAMES / 关键分镜' : 'VISUALS / 画面';
-  $('#detail-shots-count').textContent = String(shots.length).padStart(2, '0') + (project.video ? ' FRAMES' : ' VISUALS');
+  const stillName = project.category === 'interview' ? '采访画面' : project.category === 'short' ? '影像片段' : project.video ? '交互画面' : '设计画面';
+  $('#detail-shots-label').textContent = `${project.category === 'interview' ? 'INTERVIEW STILLS' : project.category === 'short' ? 'MOTION STILLS' : project.video ? 'SCREEN VIEWS' : 'VISUAL STUDY'} / ${stillName}`;
+  $('#detail-shots-count').textContent = String(shots.length).padStart(2, '0') + ' VIEWS';
   shots.forEach(({ source, kind, index }) => {
     const figure = element('figure', 'shot');
     const shot = media(source);
-    const label = kind === 'frame' ? '关键分镜' : '画面';
+    const label = kind === 'visual' ? '设计画面' : stillName;
     shot.alt = `${project.title} · ${label} ${index + 1}`;
     const caption = kind === 'frame' && project.frameTitles?.[index] || `${label} ${String(index + 1).padStart(2, '0')}`;
     figure.append(shot, element('figcaption', '', caption));
     grid.append(figure);
   });
-  const documentLink = $('#dialog-document');
-  documentLink.hidden = !project.document;
-  if (project.document) documentLink.href = project.document;
   dialog.showModal();
 }
 data.projects.forEach((project, index) => {
@@ -54,16 +52,12 @@ data.projects.forEach((project, index) => {
   if (!category) return;
   const button = element('button', 'project');
   button.type = 'button'; button.dataset.category = project.category; button.dataset.id = project.id;
+  button.style.setProperty('--media-ratio', project.aspect || 1.7778);
+  button.dataset.orientation = project.aspect < .95 ? 'portrait' : 'landscape';
   const frame = element('span', 'project-image');
-  if (project.image) { const img = media(project.image); img.alt = `${project.title}封面`; frame.append(img); }
-  else if (project.kind === 'document') {
-    frame.classList.add('script-image');
-    frame.append(element('span', 'index', String(index + 1).padStart(2, '0')),
-                 element('span', 'script-mark', '脚本'),
-                 element('span', 'placeholder-label', 'SCRIPT / STORYBOARD'));
-  } else { frame.append(element('span', 'index', String(index + 1).padStart(2, '0')), element('span', 'empty-cross', '+'), element('span', 'placeholder-label', 'PROJECT PLACEHOLDER')); }
-  if (project.video) frame.append(element('span', 'play-glyph', '▶'));
-  frame.append(element('span', 'project-arrow', '↗'));
+  if (project.image) { const img = media(project.image); if (index < 5) img.loading = 'eager'; img.alt = `${project.title}封面`; frame.append(img); }
+  if (project.hoverImage) { const hover = media(project.hoverImage); hover.classList.add('project-hover-image'); hover.alt = ''; frame.append(hover); }
+  frame.append(element('span', 'project-arrow line-icon diagonal'));
   const meta = element('span', 'project-meta');
   meta.append(element('h3', '', project.title || '作品待添加'), element('span', '', String(index + 1).padStart(2, '0')));
   button.append(frame, meta, element('span', 'project-subtitle', category.name + (project.duration ? ' · ' + project.duration : '')));
@@ -73,13 +67,52 @@ data.projects.forEach((project, index) => {
 function filterProjects(id) {
   $$('.filters button').forEach(button => { const active = button.dataset.filter === id; button.classList.toggle('active', active); button.setAttribute('aria-pressed', String(active)); });
   nodes.forEach(node => node.hidden = id !== 'all' && node.dataset.category !== id);
-  nodes.filter(node => !node.hidden).forEach((node, index) => {
-    node.classList.remove('layout-0', 'layout-1', 'layout-2', 'layout-3', 'layout-4');
-    node.classList.add('layout-' + (index % 5));
+  $('#archive-count').textContent = String(nodes.filter(node => !node.hidden).length).padStart(2, '0') + ' WORKS';
+  requestAnimationFrame(layoutProjects);
+}
+function layoutProjects() {
+  const container = $('#projects');
+  const source = nodes.filter(node => !node.hidden);
+  const width = container.clientWidth;
+  const columns = width < 900 ? 2 : 3;
+  const visible = [];
+  if (columns === 2) {
+    for (const category of data.categories) {
+      const group = source.filter(node => node.dataset.category === category.id);
+      while (group.length) {
+        const node = group.shift();
+        visible.push(node);
+        if (Number(node.style.getPropertyValue('--media-ratio')) < 1.12 && group.length && Number(group[0].style.getPropertyValue('--media-ratio')) > 1.12) {
+          const partner = group.findIndex(item => Number(item.style.getPropertyValue('--media-ratio')) < 1.12);
+          if (partner >= 0 && partner < 5) visible.push(group.splice(partner, 1)[0]);
+        }
+      }
+    }
+  } else visible.push(...source);
+  const gap = width < 600 ? 14 : 26;
+  const colWidth = (width - gap * (columns - 1)) / columns;
+  const heights = Array(columns).fill(0);
+  if (columns === 2) heights[1] = 52;
+  visible.forEach((node, index) => {
+    const aspect = Number(node.style.getPropertyValue('--media-ratio')) || 1.7778;
+    const span = aspect > 1.12 ? 2 : 1;
+    let bestColumn = 0, bestTop = Infinity;
+    for (let column = 0; column <= columns - span; column++) {
+      const top = Math.max(...heights.slice(column, column + span));
+      if (top < bestTop) { bestTop = top; bestColumn = column; }
+    }
+    node.style.width = `${colWidth * span + gap * (span - 1)}px`;
+    node.style.left = `${bestColumn * (colWidth + gap)}px`;
+    node.style.top = `${bestTop}px`;
+    const nextHeight = bestTop + node.getBoundingClientRect().height + (width < 600 ? 32 : 60);
+    for (let column = bestColumn; column < bestColumn + span; column++) heights[column] = nextHeight;
   });
-  $('#archive-count').textContent = String(nodes.filter(node => !node.hidden).length).padStart(2, '0') + ' PROJECT SPACES';
+  container.style.height = `${Math.max(0, ...heights) - (visible.length ? (width < 600 ? 32 : 60) : 0)}px`;
 }
 $$('.filters button').forEach(button => button.addEventListener('click', () => filterProjects(button.dataset.filter)));
+const stage = $('.sequence-stage');
+const stageVisuals = [...stage.querySelectorAll('.stage-visual')];
+let activeVisual = -1, activeImage = '';
 function selectSequence(index) {
   sequenceIndex = (index + data.categories.length) % data.categories.length;
   const category = data.categories[sequenceIndex];
@@ -89,8 +122,15 @@ function selectSequence(index) {
   const featuredTitles = { interview: '杭城妈妈会客厅第一期', short: '豪士面包', design: '长白山 IP 设计：白参参' };
   const featured = data.projects.find(project => project.category === category.id && project.title === featuredTitles[category.id]) ||
                    data.projects.find(project => project.category === category.id && project.image);
-  $('.sequence-stage').style.backgroundImage = featured ? `linear-gradient(90deg,rgba(0,0,0,.68),rgba(0,0,0,.3)),url("${featured.image}")` : '';
-  $('.sequence-stage').classList.toggle('has-media', Boolean(featured));
+  if (featured?.image && featured.image !== activeImage) {
+    const next = (activeVisual + 1) % stageVisuals.length;
+    stageVisuals[next].style.backgroundImage = `url("${featured.image}")`;
+    stageVisuals[next].classList.add('is-active');
+    if (activeVisual >= 0) stageVisuals[activeVisual].classList.remove('is-active');
+    activeVisual = next;
+    activeImage = featured.image;
+  }
+  stage.classList.toggle('has-media', Boolean(featured));
   $$('.sequence-tabs button').forEach((b, i) => { b.setAttribute('aria-selected', String(i === sequenceIndex)); b.tabIndex = i === sequenceIndex ? 0 : -1; });
 }
 $$('.sequence-tabs button').forEach((b, i) => { b.addEventListener('click', () => selectSequence(i)); b.addEventListener('keydown', event => { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) { event.preventDefault(); selectSequence(event.key === 'Home' ? 0 : event.key === 'End' ? 2 : sequenceIndex + (event.key === 'ArrowLeft' ? -1 : 1)); $$('.sequence-tabs button')[sequenceIndex].focus(); } }); });
@@ -118,13 +158,15 @@ function updateScrollState() {
   targetHeroY = Math.min(scrollY, innerHeight) * -.15;
   const rect = sequence.getBoundingClientRect();
   const travel = sequence.offsetHeight - innerHeight;
+  const entering = Math.min(1, Math.max(0, (innerHeight - rect.top) / (innerHeight * .9)));
+  stage.style.setProperty('--stage-grow', entering.toFixed(3));
   if (travel > 0 && rect.top <= 0 && rect.bottom >= innerHeight) {
     const local = Math.min(1, Math.max(0, -rect.top / travel));
+    stage.style.setProperty('--stage-motion', ((local * 3) % 1).toFixed(3));
     const frame = Math.min(2, Math.floor(local * 3));
     if (frame !== lastForcedFrame) {
       lastForcedFrame = frame;
-      $('.sequence-stage').classList.add('changing');
-      setTimeout(() => { selectSequence(frame); $('.sequence-stage').classList.remove('changing'); }, reducedMotion.matches ? 0 : 180);
+      selectSequence(frame);
     }
   }
 }
@@ -136,11 +178,31 @@ function animateHero() {
 }
 window.addEventListener('scroll', updateScrollState, { passive: true });
 window.addEventListener('resize', updateScrollState, { passive: true });
+window.addEventListener('resize', () => requestAnimationFrame(layoutProjects), { passive: true });
 updateScrollState(); animateHero();
 const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { $$('.navigation nav a').forEach(a => { if (a.hash === '#' + entry.target.id) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); }); } }), { rootMargin: '-15% 0px -50% 0px' });
 $$('main>section').forEach(section => observer.observe(section));
-if (data.bio) $('.about-placeholder').textContent = data.bio;
-if (data.email) { const link = element('a', '', data.email); link.href = 'mailto:' + data.email; $('#contact-email').replaceChildren(link); }
+const revealObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+  if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); }
+}), { threshold: .08, rootMargin: '0px 0px 80px 0px' });
+$$('.archive-heading,.archive-bar,.project,.about-layout,.contact-heading,.contact-grid').forEach(node => {
+  node.classList.add('grow-in'); revealObserver.observe(node);
+});
+if (data.email) $('#contact-email').textContent = data.email;
 if (data.wechat) $('#contact-wechat').textContent = data.wechat;
+$$('.copy-card').forEach(button => button.addEventListener('click', async () => {
+  const value = button.dataset.copy === 'email' ? data.email : data.wechat;
+  try {
+    if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(value);
+    else {
+      const field = document.createElement('textarea'); field.value = value;
+      document.body.append(field); field.select();
+      if (!document.execCommand('copy')) throw new Error('copy failed');
+      field.remove();
+    }
+    button.querySelector('.copy-feedback').textContent = '已复制';
+    setTimeout(() => { button.querySelector('.copy-feedback').textContent = '点击复制'; }, 2200);
+  } catch { button.querySelector('.copy-feedback').textContent = '复制失败，请手动复制'; }
+}));
 $('#year').textContent = new Date().getFullYear();
 selectSequence(0); filterProjects('all');
