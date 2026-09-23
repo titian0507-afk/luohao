@@ -72,7 +72,7 @@ window.PORTFOLIO = {
       "id": "interview-03",
       "category": "interview",
       "kind": "video",
-      "title": "学员采访",
+      "title": "SAT访谈",
       "image": "assets/works/interview-03-shot-02.jpg",
       "video": "assets/works/interview-03.mp4",
       "frames": [
@@ -141,7 +141,7 @@ window.PORTFOLIO = {
       "id": "short-01",
       "category": "short",
       "kind": "video",
-      "title": "豪士面包",
+      "title": "创意广告-《豪好吃时刻》",
       "image": "assets/works/short-01-shot-02.jpg",
       "video": "assets/works/short-01.mp4",
       "frames": [
@@ -233,7 +233,7 @@ window.PORTFOLIO = {
       "id": "short-05",
       "category": "short",
       "kind": "video",
-      "title": "鼠标",
+      "title": "创意短视频-《方寸之间》",
       "image": "assets/works/short-05-shot-02.jpg",
       "video": "assets/works/short-05.mp4",
       "frames": [
@@ -348,7 +348,7 @@ window.PORTFOLIO = {
       "id": "short-10",
       "category": "short",
       "kind": "video",
-      "title": "祝老师ai音乐",
+      "title": "AI音乐营销短视频",
       "image": "assets/works/short-10-shot-02.jpg",
       "video": "assets/works/short-10.mp4",
       "frames": [
@@ -417,7 +417,7 @@ window.PORTFOLIO = {
       "id": "short-13",
       "category": "short",
       "kind": "video",
-      "title": "图文快闪剪映版",
+      "title": "预热图文快闪",
       "image": "assets/works/short-13-shot-02.jpg",
       "video": "assets/works/short-13.mp4",
       "frames": [
@@ -440,7 +440,7 @@ window.PORTFOLIO = {
       "id": "short-14",
       "category": "short",
       "kind": "video",
-      "title": "开业",
+      "title": "社区开业宣传视频",
       "image": "assets/works/short-14-shot-02.jpg",
       "video": "assets/works/short-14.mp4",
       "frames": [
@@ -463,7 +463,7 @@ window.PORTFOLIO = {
       "id": "short-15",
       "category": "short",
       "kind": "video",
-      "title": "演员出镜",
+      "title": "场馆开业视频",
       "image": "assets/works/short-15-shot-02.jpg",
       "video": "assets/works/short-15.mp4",
       "frames": [
@@ -509,7 +509,7 @@ window.PORTFOLIO = {
       "id": "design-01",
       "category": "design",
       "kind": "video",
-      "title": "校园招生宣传 H5",
+      "title": "H5-《一路光华》",
       "image": "assets/works/design-01-shot-02.jpg",
       "video": "assets/works/design-01.mp4",
       "frames": [

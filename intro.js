@@ -5,6 +5,13 @@ const introSkip = document.querySelector('.intro-skip');
 const introTime = document.querySelector('#intro-time');
 const introTimeline = document.querySelector('.intro-timeline span');
 let introClosed = false;
+let introVisit = 0;
+try {
+  introVisit = Number(localStorage.getItem('luohao-intro-visit') || 0);
+  localStorage.setItem('luohao-intro-visit', String(introVisit + 1));
+} catch { /* Storage may be unavailable in a private browsing context. */ }
+introVideo.src = introVisit % 2 ? 'assets/works/short-02.mp4' : 'assets/intro.mp4';
+introVideo.load();
 
 // Keep the site out of the keyboard order until the opening film finishes.
 const siteSections = [document.querySelector('.skip-link'), document.querySelector('.navigation'), document.querySelector('main'), document.querySelector('footer')];
