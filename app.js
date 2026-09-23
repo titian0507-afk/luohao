@@ -227,7 +227,6 @@ function layoutProjects() {
 $$('.filters button').forEach(button => button.addEventListener('click', () => filterProjects(button.dataset.filter)));
 const featuredIds = ['interview-04', 'short-01', 'design-ip'];
 const sequenceTrack = $('#sequence-panels');
-const sequenceSlides = [];
 data.categories.forEach((category, index) => {
   const project = data.projects.find(item => item.id === featuredIds[index]);
   const slide = element('article', 'sequence-slide');
@@ -243,28 +242,14 @@ data.categories.forEach((category, index) => {
     visual.append(image);
   }
   slide.append(editorial, visual);
-  slide.style.zIndex = String(index + 1);
   sequenceTrack.append(slide);
-  sequenceSlides.push(slide);
 });
-let renderedSequencePosition = -1;
 let renderedSequenceIndex = -1;
 function renderSequence(progress) {
-  const position = reducedMotion.matches ? Math.round(Math.min(2, Math.max(0, progress))) : Math.min(2, Math.max(0, progress));
-  if (Math.abs(position - renderedSequencePosition) > .0005) {
-    sequenceSlides[1].style.clipPath = `inset(0 0 0 ${((1 - Math.min(1, position)) * 100).toFixed(3)}%)`;
-    sequenceSlides[2].style.clipPath = `inset(0 0 0 ${((1 - Math.max(0, position - 1)) * 100).toFixed(3)}%)`;
-    const fade = (value, start, end) => Math.min(1, Math.max(0, (value - start) / (end - start)));
-    const first = Math.min(1, position);
-    const second = Math.max(0, position - 1);
-    sequenceSlides[0].firstChild.style.opacity = String(1 - fade(first, .55, .8));
-    sequenceSlides[1].firstChild.style.opacity = String(fade(first, .72, .94) * (1 - fade(second, .55, .8)));
-    sequenceSlides[2].firstChild.style.opacity = String(fade(second, .72, .94));
-    renderedSequencePosition = position;
-  }
-  sequenceIndex = Math.min(2, Math.floor(position) + (position % 1 >= .72 ? 1 : 0));
+  sequenceIndex = Math.round(Math.min(2, Math.max(0, progress)));
   if (sequenceIndex === renderedSequenceIndex) return;
   renderedSequenceIndex = sequenceIndex;
+  sequenceTrack.style.transform = `translate3d(${-sequenceIndex * 100 / 3}%,0,0)`;
   $('#sequence-name').textContent = data.categories[sequenceIndex].name;
   $('#sequence-current').textContent = String(sequenceIndex + 1).padStart(2, '0');
   $$('.sequence-tabs button').forEach((button, index) => {
@@ -274,7 +259,7 @@ function renderSequence(progress) {
 }
 function goToSequence(index) {
   const target = Math.min(2, Math.max(0, index));
-  window.scrollTo({ top: sequence.offsetTop + (sequence.offsetHeight - innerHeight) * (target / 2), behavior: reducedMotion.matches ? 'instant' : 'smooth' });
+  window.scrollTo({ top: sequence.offsetTop + (sequence.offsetHeight - innerHeight) * (target / 2), behavior: 'instant' });
 }
 $$('.sequence-tabs button').forEach((button, index) => {
   button.addEventListener('click', () => goToSequence(index));
@@ -346,6 +331,20 @@ function scheduleScrollState() {
   scrollFrame = requestAnimationFrame(() => { scrollFrame = 0; updateScrollState(); });
 }
 window.addEventListener('scroll', scheduleScrollState, { passive: true });
+function snapSequence() {
+  if (document.body.classList.contains('intro-active')) return;
+  const y = scrollY;
+  if (y < sequenceTop - 2 || y > sequenceTop + sequenceTravel + 2) return;
+  const index = Math.round((y - sequenceTop) / sequenceTravel * 2);
+  const target = sequenceTop + sequenceTravel * index / 2;
+  if (Math.abs(target - y) < 3) return;
+  window.scrollTo({ top: target, behavior: reducedMotion.matches ? 'instant' : 'smooth' });
+}
+if ('onscrollend' in window) window.addEventListener('scrollend', snapSequence);
+else {
+  let snapTimer;
+  window.addEventListener('scroll', () => { clearTimeout(snapTimer); snapTimer = setTimeout(snapSequence, 160); }, { passive: true });
+}
 window.addEventListener('resize', () => { measureScrollGeometry(); scheduleScrollState(); requestAnimationFrame(layoutProjects); }, { passive: true });
 measureScrollGeometry(); updateScrollState();
 const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { $$('.navigation nav a').forEach(a => { if (a.hash === '#' + entry.target.id) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); }); } }), { rootMargin: '-15% 0px -50% 0px' });
