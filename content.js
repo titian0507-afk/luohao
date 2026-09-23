@@ -86,7 +86,8 @@ window.PORTFOLIO = {
         "assets/works/interview-mctalk-part-06.mp4",
         "assets/works/interview-mctalk-part-07.mp4",
         "assets/works/interview-mctalk-part-08.mp4"
-      ]
+      ],
+      "poster": "assets/works/interview-mctalk-sequence.webp"
     },
     {
       "id": "interview-01",
@@ -546,7 +547,8 @@ window.PORTFOLIO = {
       "portrait": false,
       "duration": "00:52",
       "aspect": 0.75,
-      "hoverImage": "assets/works/aigc-theater-shot-02.webp"
+      "hoverImage": "assets/works/aigc-theater-shot-02.webp",
+      "poster": "assets/works/aigc-theater-shot-02.webp"
     },
     {
       "id": "short-01",

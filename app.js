@@ -97,7 +97,7 @@ function openProject(project, startIndex = 0) {
   container.classList.toggle('is-gallery', project.kind === 'gallery');
   if (project.video) {
     const player = media(project.video, true);
-    if (project.image) player.poster = project.image;
+    if (project.poster || project.image) player.poster = project.poster || project.image;
     container.append(player);
     if (project.parts?.length) {
       let activePart = 0;
