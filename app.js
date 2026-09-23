@@ -227,28 +227,42 @@ function layoutProjects() {
 $$('.filters button').forEach(button => button.addEventListener('click', () => filterProjects(button.dataset.filter)));
 const featuredIds = ['interview-04', 'short-01', 'design-ip'];
 const sequenceTrack = $('#sequence-panels');
+const sequenceSlides = [];
 data.categories.forEach((category, index) => {
   const project = data.projects.find(item => item.id === featuredIds[index]);
   const slide = element('article', 'sequence-slide');
+  if (index === 2) slide.classList.add('is-design');
+  const editorial = element('div', 'sequence-editorial');
+  editorial.append(element('span', 'sequence-kicker', `LUO HAO / ${String(index + 1).padStart(2, '0')}`));
+  const title = element('h2', '', category.name);
+  editorial.append(title, element('span', 'sequence-english', category.english));
+  const visual = element('div', 'sequence-visual');
   if (project?.image) {
-    const image = media(project.image);
+    const image = media(index === 2 ? 'assets/works/design-ip-04.webp' : project.image);
     image.className = 'sequence-image'; image.loading = 'eager'; image.alt = '';
-    slide.append(image);
+    visual.append(image);
   }
-  const caption = element('div', 'sequence-slide-caption');
-  caption.append(element('span', 'label', `${String(index + 1).padStart(2, '0')} / 03 — ${category.english}`), element('h2', '', category.name));
-  slide.append(caption);
+  slide.append(editorial, visual);
+  slide.style.zIndex = String(index + 1);
   sequenceTrack.append(slide);
+  sequenceSlides.push(slide);
 });
 let renderedSequencePosition = -1;
 let renderedSequenceIndex = -1;
 function renderSequence(progress) {
-  const position = Math.min(2, Math.max(0, progress));
+  const position = reducedMotion.matches ? Math.round(Math.min(2, Math.max(0, progress))) : Math.min(2, Math.max(0, progress));
   if (Math.abs(position - renderedSequencePosition) > .0005) {
-    sequenceTrack.style.transform = `translate3d(${(-position * 100 / 3).toFixed(4)}%,0,0)`;
+    sequenceSlides[1].style.clipPath = `inset(0 0 0 ${((1 - Math.min(1, position)) * 100).toFixed(3)}%)`;
+    sequenceSlides[2].style.clipPath = `inset(0 0 0 ${((1 - Math.max(0, position - 1)) * 100).toFixed(3)}%)`;
+    const fade = (value, start, end) => Math.min(1, Math.max(0, (value - start) / (end - start)));
+    const first = Math.min(1, position);
+    const second = Math.max(0, position - 1);
+    sequenceSlides[0].firstChild.style.opacity = String(1 - fade(first, .55, .8));
+    sequenceSlides[1].firstChild.style.opacity = String(fade(first, .72, .94) * (1 - fade(second, .55, .8)));
+    sequenceSlides[2].firstChild.style.opacity = String(fade(second, .72, .94));
     renderedSequencePosition = position;
   }
-  sequenceIndex = Math.round(position);
+  sequenceIndex = Math.min(2, Math.floor(position) + (position % 1 >= .72 ? 1 : 0));
   if (sequenceIndex === renderedSequenceIndex) return;
   renderedSequenceIndex = sequenceIndex;
   $('#sequence-name').textContent = data.categories[sequenceIndex].name;
