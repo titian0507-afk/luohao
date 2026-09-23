@@ -4,6 +4,12 @@ const $$ = (s) => [...document.querySelectorAll(s)];
 const dialog = $('#project-dialog');
 const lightbox = $('#image-lightbox');
 let sequenceIndex = 0;
+const sequenceSlides = [
+  ...data.categories,
+  { id: 'mctalk-site', name: 'MCtalk', english: 'OFFICIAL SITE', featuredImage: 'assets/works/mctalk-official.webp', href: 'https://mctalk.yunxin.163.com/' },
+  { id: 'netease-xhs', name: '网易智企', english: 'XIAOHONGSHU', featuredImage: 'assets/works/xiaohongshu-official.webp', href: 'https://www.xiaohongshu.com/user/profile/668290e0000000000d025aa6?xsec_token=ABX9mhzbxOteqJvMvQqgjOS-8EnYVwrAWgEmtnbeP6A5A=&xsec_source=pc_search' }
+];
+const lastSequenceIndex = sequenceSlides.length - 1;
 const nodes = [];
 let galleryImages = [], galleryIndex = 0, galleryTitle = '', galleryLayers = [], activeGalleryLayer = 0, galleryChangeToken = 0;
 function element(tag, className, text) { const el = document.createElement(tag); if (className) el.className = className; if (text !== undefined) el.textContent = text; return el; }
@@ -86,12 +92,35 @@ function openProject(project, startIndex = 0) {
   $('#dialog-title').textContent = project.title || 'SHOWREEL';
   $('.detail-overline').textContent = project.kind === 'gallery' ? 'VISUAL PROJECT / 作品标题' : 'VIDEO TITLE / 视频标题';
   const container = $('#dialog-media'); container.replaceChildren();
+  const partMenu = $('#video-parts'); partMenu.replaceChildren(); partMenu.hidden = !project.parts?.length;
   container.classList.toggle('is-portrait', Boolean(project.video && project.portrait));
   container.classList.toggle('is-gallery', project.kind === 'gallery');
   if (project.video) {
     const player = media(project.video, true);
     if (project.image) player.poster = project.image;
     container.append(player);
+    if (project.parts?.length) {
+      let activePart = 0;
+      const buttons = project.parts.map((source, index) => {
+        const button = element('button', '', String(index + 1).padStart(2, '0'));
+        button.type = 'button';
+        button.setAttribute('aria-label', `播放第 ${index + 1} 段，共 ${project.parts.length} 段`);
+        button.addEventListener('click', () => loadPart(index, true));
+        return button;
+      });
+      function loadPart(index, play) {
+        activePart = index;
+        player.src = project.parts[index];
+        player.load();
+        buttons.forEach((button, position) => button.setAttribute('aria-current', String(position === index)));
+        if (play) player.play().catch(() => {});
+      }
+      player.addEventListener('ended', () => {
+        if (activePart + 1 < project.parts.length) loadPart(activePart + 1, true);
+      });
+      partMenu.append(element('span', 'label', '完整访谈 · 自动连播'), ...buttons);
+      buttons[0].setAttribute('aria-current', 'true');
+    }
   } else if (project.gallery?.length) {
     container.append(makeGallery(project.gallery, project.title, startIndex));
     updateGallery(startIndex);
@@ -100,8 +129,9 @@ function openProject(project, startIndex = 0) {
   const shots = project.video ? (project.frames || []) : [];
   const grid = $('#shots-grid'); grid.replaceChildren();
   $('.detail-shots').hidden = shots.length === 0 && !project.gallery?.length;
-  const stillName = project.category === 'interview' ? '采访画面' : project.category === 'short' ? '影像片段' : '交互画面';
-  $('#detail-shots-label').textContent = `${project.category === 'interview' ? 'INTERVIEW STILLS' : project.category === 'short' ? 'MOTION STILLS' : 'SCREEN VIEWS'} / ${stillName}`;
+  const stillName = project.category === 'interview' ? '采访画面' : project.category === 'aigc' ? '生成画面' : project.category === 'marketing' ? '影像片段' : '交互画面';
+  const stillEnglish = { interview: 'INTERVIEW STILLS', marketing: 'MOTION STILLS', aigc: 'GENERATED FRAMES', design: 'SCREEN VIEWS' };
+  $('#detail-shots-label').textContent = `${stillEnglish[project.category] || 'PROJECT STILLS'} / ${stillName}`;
   $('#detail-shots-count').textContent = String(shots.length).padStart(2, '0') + ' VIEWS';
   shots.forEach((source, index) => {
     const figure = element('figure', 'shot');
@@ -225,55 +255,70 @@ function layoutProjects() {
   container.style.height = `${Math.max(0, ...heights) - (visible.length ? (width < 600 ? 32 : 60) : 0)}px`;
 }
 $$('.filters button').forEach(button => button.addEventListener('click', () => filterProjects(button.dataset.filter)));
-const featuredIds = ['interview-04', 'short-01', 'design-ip'];
 const sequenceTrack = $('#sequence-panels');
-data.categories.forEach((category, index) => {
-  const project = data.projects.find(item => item.id === featuredIds[index]);
+sequenceSlides.forEach((category, index) => {
   const slide = element('article', 'sequence-slide');
-  if (index === 2) slide.classList.add('is-design');
+  if (category.id === 'design') slide.classList.add('is-design');
+  if (category.href) slide.classList.add('is-external', category.id);
   const editorial = element('div', 'sequence-editorial');
   editorial.append(element('span', 'sequence-kicker', `LUO HAO / ${String(index + 1).padStart(2, '0')}`));
   const title = element('h2', '', category.name);
   editorial.append(title, element('span', 'sequence-english', category.english));
   const visual = element('div', 'sequence-visual');
-  if (project?.image) {
-    const image = media(index === 2 ? 'assets/works/design-ip-04.webp' : project.image);
+  if (category.featuredImage) {
+    const image = media(category.featuredImage);
     image.className = 'sequence-image'; image.loading = 'eager'; image.alt = '';
-    visual.append(image);
+    if (category.href) {
+      const link = element('a', 'sequence-visual-link');
+      link.href = category.href; link.target = '_blank'; link.rel = 'noopener noreferrer';
+      link.setAttribute('aria-label', `打开${category.name}${category.id === 'mctalk-site' ? '官网' : '小红书主页'}`);
+      link.append(image); visual.append(link);
+    } else visual.append(image);
   }
   slide.append(editorial, visual);
   sequenceTrack.append(slide);
 });
 let renderedSequenceIndex = -1;
 function renderSequence(progress) {
-  sequenceIndex = Math.round(Math.min(2, Math.max(0, progress)));
+  sequenceIndex = Math.round(Math.min(lastSequenceIndex, Math.max(0, progress)));
   if (sequenceIndex === renderedSequenceIndex) return;
   renderedSequenceIndex = sequenceIndex;
-  sequenceTrack.style.transform = `translate3d(${-sequenceIndex * 100 / 3}%,0,0)`;
-  $('#sequence-name').textContent = data.categories[sequenceIndex].name;
+  sequenceTrack.style.transform = `translate3d(${-sequenceIndex * 100 / sequenceSlides.length}%,0,0)`;
+  $('#sequence-name').textContent = sequenceSlides[sequenceIndex].name;
   $('#sequence-current').textContent = String(sequenceIndex + 1).padStart(2, '0');
+  $('#sequence-explore-label').textContent = sequenceSlides[sequenceIndex].href ? 'VISIT' : 'EXPLORE';
+  $('.sequence-stage').classList.toggle('is-xhs-active', sequenceSlides[sequenceIndex].id === 'netease-xhs');
+  const tabs = $('.sequence-tabs');
   $$('.sequence-tabs button').forEach((button, index) => {
     button.setAttribute('aria-selected', String(index === sequenceIndex));
     button.tabIndex = index === sequenceIndex ? 0 : -1;
+    if (index === sequenceIndex && tabs.scrollWidth > tabs.clientWidth) {
+      tabs.scrollTo({ left: button.offsetLeft - tabs.offsetLeft - (tabs.clientWidth - button.clientWidth) / 2, behavior: 'smooth' });
+    }
   });
 }
 function goToSequence(index) {
-  const target = Math.min(2, Math.max(0, index));
+  const target = Math.min(lastSequenceIndex, Math.max(0, index));
   renderSequence(target);
-  window.scrollTo({ top: sequence.offsetTop + (sequence.offsetHeight - innerHeight) * (target / 2), behavior: 'instant' });
+  window.scrollTo({ top: sequence.offsetTop + (sequence.offsetHeight - innerHeight) * (target / lastSequenceIndex), behavior: 'instant' });
 }
 $$('.sequence-tabs button').forEach((button, index) => {
   button.addEventListener('click', () => goToSequence(index));
   button.addEventListener('keydown', event => {
     if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
     event.preventDefault();
-    const target = event.key === 'Home' ? 0 : event.key === 'End' ? 2 : Math.min(2, Math.max(0, sequenceIndex + (event.key === 'ArrowLeft' ? -1 : 1)));
+    const target = event.key === 'Home' ? 0 : event.key === 'End' ? lastSequenceIndex : Math.min(lastSequenceIndex, Math.max(0, sequenceIndex + (event.key === 'ArrowLeft' ? -1 : 1)));
     goToSequence(target); $$('.sequence-tabs button')[target].focus();
   });
 });
 $('#previous').addEventListener('click', () => goToSequence(sequenceIndex - 1));
 $('#next').addEventListener('click', () => goToSequence(sequenceIndex + 1));
-$('#sequence-explore').addEventListener('click', () => { filterProjects(data.categories[sequenceIndex].id); $('#works').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' }); });
+$('#sequence-explore').addEventListener('click', () => {
+  const slide = sequenceSlides[sequenceIndex];
+  if (slide.href) { window.open(slide.href, '_blank', 'noopener,noreferrer'); return; }
+  filterProjects(slide.id);
+  $('#works').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+});
 $('#showreel').addEventListener('click', () => openProject({ title: 'SHOWREEL', kind: 'video', video: data.showreel, frames: [] }));
 $$('.dialog-close, .dialog-done').forEach(b => b.addEventListener('click', () => dialog.close()));
 dialog.addEventListener('click', event => { const rect = dialog.getBoundingClientRect(); if (event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) dialog.close(); });
@@ -311,7 +356,7 @@ function updateScrollState() {
   const viewport = innerHeight;
   const max = document.documentElement.scrollHeight - innerHeight;
   const progress = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
-  const sequencePosition = Math.min(2, Math.max(0, (y - sequenceTop) / sequenceTravel * 2));
+  const sequencePosition = Math.min(lastSequenceIndex, Math.max(0, (y - sequenceTop) / sequenceTravel * lastSequenceIndex));
   updateNav();
   progressLine.style.transform = `scaleX(${progress})`;
   progressDot.style.transform = `translate3d(${(progressWidth * progress).toFixed(2)}px,-50%,0) translateX(-50%)`;
@@ -346,8 +391,8 @@ window.addEventListener('wheel', event => {
     return;
   }
   const direction = Math.sign(event.deltaY);
-  const current = Math.round((y - sequenceTop) / sequenceTravel * 2);
-  if ((current === 0 && direction < 0) || (current === 2 && direction > 0)) return;
+  const current = Math.round((y - sequenceTop) / sequenceTravel * lastSequenceIndex);
+  if ((current === 0 && direction < 0) || (current === lastSequenceIndex && direction > 0)) return;
   event.preventDefault();
   sequenceWheelLocked = true;
   goToSequence(current + direction);
@@ -357,8 +402,8 @@ function snapSequence() {
   if (document.body.classList.contains('intro-active')) return;
   const y = scrollY;
   if (y < sequenceTop - 2 || y > sequenceTop + sequenceTravel + 2) return;
-  const index = Math.round((y - sequenceTop) / sequenceTravel * 2);
-  const target = sequenceTop + sequenceTravel * index / 2;
+  const index = Math.round((y - sequenceTop) / sequenceTravel * lastSequenceIndex);
+  const target = sequenceTop + sequenceTravel * index / lastSequenceIndex;
   if (Math.abs(target - y) < 3) return;
   window.scrollTo({ top: target, behavior: 'instant' });
 }

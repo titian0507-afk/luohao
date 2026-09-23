@@ -199,4 +199,51 @@ main,footer{position:relative;z-index:1}
 @media(max-width:900px){.sequence-slide{grid-template-columns:43% 57%}.sequence-editorial{padding:28px}.sequence-editorial::before{left:28px}.sequence-editorial h2{font-size:clamp(42px,7vw,72px)}}
 @media(max-width:700px){.sequence-slide{display:block}.sequence-visual{position:absolute;inset:0}.sequence-visual::after{background:linear-gradient(0deg,#000b,transparent 62%),linear-gradient(90deg,#0005,transparent 45%)}.sequence-editorial{position:absolute;inset:auto 0 0;z-index:3;display:block;padding:28px 25px 92px;background:linear-gradient(0deg,#000b,transparent)}.sequence-editorial::before{display:none}.sequence-editorial h2{font-size:clamp(48px,13vw,72px);margin:11px 0 7px}.sequence-kicker,.sequence-english{font-size:9px}.sequence-stage .stage-caption{right:25px;bottom:24px}.sequence-slide.is-design .sequence-image{object-position:79% center}}
 @media(prefers-reduced-motion:reduce){.sequence-panels{transition:none}}
+
+/* Four-chapter portfolio and continuous long-form interview playback. */
+.sequence{height:400svh}
+.sequence-panels{width:400%}
+.sequence-slide{flex-basis:25%;width:25%}
+.sequence-tabs{max-width:900px}
+.video-parts[hidden]{display:none}
+.video-parts{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin:18px 0 12px}
+.video-parts .label{margin-right:12px}
+.video-parts button{width:36px;height:36px;border:1px solid #595955;border-radius:50%;color:#b6b5ae;font:11px var(--mono);transition:background .25s,color .25s,border-color .25s}
+.video-parts button:hover,.video-parts button[aria-current=true]{background:#f2f1ed;color:#111;border-color:#f2f1ed}
+@media(max-width:700px){.sequence-tabs{gap:8px}.sequence-tabs button{min-width:0;font-size:10px;padding-block:17px}.sequence-tabs button span{display:block;margin:0 0 7px}.filters{flex-wrap:wrap;justify-content:flex-start;gap:5px}.filters button{padding:10px 12px;font-size:10px}.video-parts .label{flex:0 0 100%;margin:0 0 2px}}
+
+/* Six selected chapters; the final two open the official destinations. */
+.sequence{height:600svh}
+.sequence-sticky{padding-top:118px}
+.sequence-panels{width:600%}
+.sequence-slide{flex-basis:16.666667%;width:16.666667%}
+.sequence-tabs{max-width:none;min-width:0;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:none}
+.sequence-tabs::-webkit-scrollbar{display:none}
+.sequence-tabs button{flex:1 0 auto;min-width:88px}
+.sequence-slide.is-external .sequence-visual::after{display:none}
+.sequence-slide.mctalk-site{background:#10223b}
+.sequence-slide.mctalk-site .sequence-visual{background:#3988e5}
+.sequence-slide.netease-xhs{background:#171819}
+.sequence-slide.netease-xhs .sequence-visual{background:#fff}
+.sequence-visual-link{position:absolute;inset:0;display:block}
+.sequence-visual-link:focus-visible{outline:3px solid #fff;outline-offset:-6px}
+.sequence-slide.is-external .sequence-image{object-fit:contain}
+.sequence-slide.is-design .sequence-image{object-position:center top}
+.sequence-stage.is-xhs-active .stage-caption .button.light{background:#1d1d1d;color:#fff}
+.sequence-stage.is-xhs-active .stage-caption .button.light:hover{background:#3b3b3b}
+#sequence-explore-label{font:inherit;font-size:11px;letter-spacing:.23em}
+
+/* Same-position name reveal, with the supplied external-link mark. */
+.spotlight-name{position:relative;display:inline-block;vertical-align:baseline;pointer-events:auto;--spot-radius:.56em;--spot-x:50%;--spot-y:50%}
+.spotlight-name .name-original,.spotlight-name .name-secret{display:block;white-space:nowrap}
+.spotlight-name .name-secret{position:absolute;inset:0;opacity:0;color:#fff;text-shadow:0 0 20px #fff8;pointer-events:none}
+.spotlight-name.is-spotlit .name-original{-webkit-mask-image:radial-gradient(circle var(--spot-radius) at var(--spot-x) var(--spot-y),transparent 55%,#000 100%);mask-image:radial-gradient(circle var(--spot-radius) at var(--spot-x) var(--spot-y),transparent 55%,#000 100%)}
+.spotlight-name.is-spotlit .name-secret{opacity:1;-webkit-mask-image:radial-gradient(circle var(--spot-radius) at var(--spot-x) var(--spot-y),#000 55%,transparent 100%);mask-image:radial-gradient(circle var(--spot-radius) at var(--spot-x) var(--spot-y),#000 55%,transparent 100%)}
+.brand .spotlight-name{--spot-radius:25px}
+.hero-type .spotlight-name{pointer-events:auto}
+.line-icon.diagonal{transform:none;background:currentColor;-webkit-mask:url('assets/external-link.png') center/contain no-repeat;mask:url('assets/external-link.png') center/contain no-repeat}
+.line-icon.diagonal::before,.line-icon.diagonal::after{display:none}
+.project:hover .project-arrow.line-icon{transform:scale(1.1)}
+@media(max-width:700px){.sequence-sticky{padding-top:105px}.sequence-tabs{gap:7px}.sequence-tabs button{min-width:77px;font-size:10px}.sequence-stage .stage-caption{z-index:5}}
+@media(hover:none){.spotlight-name .name-secret{display:none}}
 .contact-grid .resume-icon{display:block;width:24px;height:24px;flex:none}

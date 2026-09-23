@@ -8,26 +8,92 @@ window.PORTFOLIO = {
     {
       "id": "interview",
       "name": "访谈",
-      "english": "INTERVIEWS"
+      "english": "INTERVIEWS",
+      "featuredImage": "assets/works/interview-mctalk-sequence.webp"
     },
     {
-      "id": "short",
-      "name": "短视频",
-      "english": "SHORT FORM"
+      "id": "marketing",
+      "name": "营销视频",
+      "english": "CAMPAIGN FILMS",
+      "featuredImage": "assets/works/short-04-cover.webp"
+    },
+    {
+      "id": "aigc",
+      "name": "AIGC",
+      "english": "AI & CREATIVE",
+      "featuredImage": "assets/works/short-01-cover.webp"
     },
     {
       "id": "design",
       "name": "平面与H5",
-      "english": "GRAPHIC & H5"
+      "english": "GRAPHIC & H5",
+      "featuredImage": "assets/works/design-ip-07.webp"
     }
   ],
   "projects": [
+    {
+      "id": "interview-cloud",
+      "category": "interview",
+      "kind": "video",
+      "title": "云商系列采访",
+      "image": "assets/works/interview-cloud-cover.webp",
+      "video": "assets/works/interview-cloud.mp4",
+      "frames": [
+        "assets/works/interview-cloud-shot-01.webp",
+        "assets/works/interview-cloud-shot-02.webp",
+        "assets/works/interview-cloud-shot-03.webp"
+      ],
+      "frameTitles": [
+        "",
+        "",
+        ""
+      ],
+      "gallery": [],
+      "portrait": true,
+      "duration": "01:56",
+      "aspect": 0.75,
+      "hoverImage": "assets/works/interview-cloud-shot-02.webp"
+    },
+    {
+      "id": "interview-mctalk",
+      "category": "interview",
+      "kind": "video",
+      "title": "MCtalk无限对话",
+      "image": "assets/works/interview-mctalk-cover.webp",
+      "video": "assets/works/interview-mctalk-part-00.mp4",
+      "frames": [
+        "assets/works/interview-mctalk-shot-01.webp",
+        "assets/works/interview-mctalk-shot-02.webp",
+        "assets/works/interview-mctalk-shot-03.webp"
+      ],
+      "frameTitles": [
+        "",
+        "",
+        ""
+      ],
+      "gallery": [],
+      "portrait": false,
+      "duration": "32:40",
+      "aspect": 0.75,
+      "hoverImage": "assets/works/interview-mctalk-shot-02.webp",
+      "parts": [
+        "assets/works/interview-mctalk-part-00.mp4",
+        "assets/works/interview-mctalk-part-01.mp4",
+        "assets/works/interview-mctalk-part-02.mp4",
+        "assets/works/interview-mctalk-part-03.mp4",
+        "assets/works/interview-mctalk-part-04.mp4",
+        "assets/works/interview-mctalk-part-05.mp4",
+        "assets/works/interview-mctalk-part-06.mp4",
+        "assets/works/interview-mctalk-part-07.mp4",
+        "assets/works/interview-mctalk-part-08.mp4"
+      ]
+    },
     {
       "id": "interview-01",
       "category": "interview",
       "kind": "video",
       "title": "学员番外",
-      "image": "assets/works/interview-01-shot-02.jpg",
+      "image": "assets/works/interview-01-cover.webp",
       "video": "assets/works/interview-01.mp4",
       "frames": [
         "assets/works/interview-01-shot-01.jpg",
@@ -50,7 +116,7 @@ window.PORTFOLIO = {
       "category": "interview",
       "kind": "video",
       "title": "学员访谈",
-      "image": "assets/works/interview-02-shot-02.jpg",
+      "image": "assets/works/interview-02-cover.webp",
       "video": "assets/works/interview-02.mp4",
       "frames": [
         "assets/works/interview-02-shot-01.jpg",
@@ -73,7 +139,7 @@ window.PORTFOLIO = {
       "category": "interview",
       "kind": "video",
       "title": "SAT访谈",
-      "image": "assets/works/interview-03-shot-02.jpg",
+      "image": "assets/works/interview-03-cover.webp",
       "video": "assets/works/interview-03.mp4",
       "frames": [
         "assets/works/interview-03-shot-01.jpg",
@@ -96,7 +162,7 @@ window.PORTFOLIO = {
       "category": "interview",
       "kind": "video",
       "title": "杭城妈妈会客厅第一期",
-      "image": "assets/works/interview-04-shot-02.jpg",
+      "image": "assets/works/interview-04-cover.webp",
       "video": "assets/works/interview-04.mp4",
       "frames": [
         "assets/works/interview-04-shot-01.jpg",
@@ -119,7 +185,7 @@ window.PORTFOLIO = {
       "category": "interview",
       "kind": "video",
       "title": "老师采访",
-      "image": "assets/works/interview-05-shot-02.jpg",
+      "image": "assets/works/interview-05-cover.webp",
       "video": "assets/works/interview-05.mp4",
       "frames": [
         "assets/works/interview-05-shot-01.jpg",
@@ -138,34 +204,11 @@ window.PORTFOLIO = {
       "hoverImage": "assets/works/interview-05-shot-03.jpg"
     },
     {
-      "id": "short-01",
-      "category": "short",
-      "kind": "video",
-      "title": "创意广告-《豪好吃时刻》",
-      "image": "assets/works/short-01-shot-02.jpg",
-      "video": "assets/works/short-01.mp4",
-      "frames": [
-        "assets/works/short-01-shot-01.jpg",
-        "assets/works/short-01-shot-02.jpg",
-        "assets/works/short-01-shot-03.jpg"
-      ],
-      "frameTitles": [
-        "",
-        "",
-        ""
-      ],
-      "gallery": [],
-      "portrait": false,
-      "duration": "00:30",
-      "aspect": 1.7778,
-      "hoverImage": "assets/works/short-01-shot-03.jpg"
-    },
-    {
       "id": "short-02",
-      "category": "short",
+      "category": "marketing",
       "kind": "video",
       "title": "ae合集",
-      "image": "assets/works/short-02-shot-02.jpg",
+      "image": "assets/works/short-02-cover.webp",
       "video": "assets/works/short-02.mp4",
       "frames": [
         "assets/works/short-02-shot-01.jpg",
@@ -185,10 +228,10 @@ window.PORTFOLIO = {
     },
     {
       "id": "short-03",
-      "category": "short",
+      "category": "marketing",
       "kind": "video",
       "title": "多媒体网课",
-      "image": "assets/works/short-03-shot-02.jpg",
+      "image": "assets/works/short-03-cover.webp",
       "video": "assets/works/short-03.mp4",
       "frames": [
         "assets/works/short-03-shot-01.jpg",
@@ -208,10 +251,10 @@ window.PORTFOLIO = {
     },
     {
       "id": "short-04",
-      "category": "short",
+      "category": "marketing",
       "kind": "video",
       "title": "微课-比赛作品",
-      "image": "assets/works/short-04-shot-02.jpg",
+      "image": "assets/works/short-04-cover.webp",
       "video": "assets/works/short-04.mp4",
       "frames": [
         "assets/works/short-04-shot-01.jpg",
@@ -230,34 +273,11 @@ window.PORTFOLIO = {
       "hoverImage": "assets/works/short-04-shot-03.jpg"
     },
     {
-      "id": "short-05",
-      "category": "short",
-      "kind": "video",
-      "title": "创意短视频-《方寸之间》",
-      "image": "assets/works/short-05-shot-02.jpg",
-      "video": "assets/works/short-05.mp4",
-      "frames": [
-        "assets/works/short-05-shot-01.jpg",
-        "assets/works/short-05-shot-02.jpg",
-        "assets/works/short-05-shot-03.jpg"
-      ],
-      "frameTitles": [
-        "",
-        "",
-        ""
-      ],
-      "gallery": [],
-      "portrait": true,
-      "duration": "01:22",
-      "aspect": 0.5604,
-      "hoverImage": "assets/works/short-05-shot-03.jpg"
-    },
-    {
       "id": "short-06",
-      "category": "short",
+      "category": "marketing",
       "kind": "video",
       "title": "宝妈IP",
-      "image": "assets/works/short-06-shot-02.jpg",
+      "image": "assets/works/short-06-cover.webp",
       "video": "assets/works/short-06.mp4",
       "frames": [
         "assets/works/short-06-shot-01.jpg",
@@ -277,10 +297,10 @@ window.PORTFOLIO = {
     },
     {
       "id": "short-07",
-      "category": "short",
+      "category": "marketing",
       "kind": "video",
       "title": "省域信息流",
-      "image": "assets/works/short-07-shot-02.jpg",
+      "image": "assets/works/short-07-cover.webp",
       "video": "assets/works/short-07.mp4",
       "frames": [
         "assets/works/short-07-shot-01.jpg",
@@ -300,10 +320,10 @@ window.PORTFOLIO = {
     },
     {
       "id": "short-08",
-      "category": "short",
+      "category": "marketing",
       "kind": "video",
       "title": "集团副总IP",
-      "image": "assets/works/short-08-shot-02.jpg",
+      "image": "assets/works/short-08-cover.webp",
       "video": "assets/works/short-08.mp4",
       "frames": [
         "assets/works/short-08-shot-01.jpg",
@@ -323,10 +343,10 @@ window.PORTFOLIO = {
     },
     {
       "id": "short-09",
-      "category": "short",
+      "category": "marketing",
       "kind": "video",
       "title": "青少班配音",
-      "image": "assets/works/short-09-shot-02.jpg",
+      "image": "assets/works/short-09-cover.webp",
       "video": "assets/works/short-09.mp4",
       "frames": [
         "assets/works/short-09-shot-01.jpg",
@@ -345,34 +365,11 @@ window.PORTFOLIO = {
       "hoverImage": "assets/works/short-09-shot-03.jpg"
     },
     {
-      "id": "short-10",
-      "category": "short",
-      "kind": "video",
-      "title": "AI音乐营销短视频",
-      "image": "assets/works/short-10-shot-02.jpg",
-      "video": "assets/works/short-10.mp4",
-      "frames": [
-        "assets/works/short-10-shot-01.jpg",
-        "assets/works/short-10-shot-02.jpg",
-        "assets/works/short-10-shot-03.jpg"
-      ],
-      "frameTitles": [
-        "",
-        "",
-        ""
-      ],
-      "gallery": [],
-      "portrait": true,
-      "duration": "01:10",
-      "aspect": 0.5604,
-      "hoverImage": "assets/works/short-10-shot-03.jpg"
-    },
-    {
       "id": "short-11",
-      "category": "short",
+      "category": "marketing",
       "kind": "video",
       "title": "词测",
-      "image": "assets/works/short-11-shot-02.jpg",
+      "image": "assets/works/short-11-cover.webp",
       "video": "assets/works/short-11.mp4",
       "frames": [
         "assets/works/short-11-shot-01.jpg",
@@ -392,10 +389,10 @@ window.PORTFOLIO = {
     },
     {
       "id": "short-12",
-      "category": "short",
+      "category": "marketing",
       "kind": "video",
       "title": "AE文字快闪",
-      "image": "assets/works/short-12-shot-02.jpg",
+      "image": "assets/works/short-12-cover.webp",
       "video": "assets/works/short-12.mp4",
       "frames": [
         "assets/works/short-12-shot-01.jpg",
@@ -415,10 +412,10 @@ window.PORTFOLIO = {
     },
     {
       "id": "short-13",
-      "category": "short",
+      "category": "marketing",
       "kind": "video",
       "title": "预热图文快闪",
-      "image": "assets/works/short-13-shot-02.jpg",
+      "image": "assets/works/short-13-cover.webp",
       "video": "assets/works/short-13.mp4",
       "frames": [
         "assets/works/short-13-shot-01.jpg",
@@ -438,10 +435,10 @@ window.PORTFOLIO = {
     },
     {
       "id": "short-14",
-      "category": "short",
+      "category": "marketing",
       "kind": "video",
       "title": "社区开业宣传视频",
-      "image": "assets/works/short-14-shot-02.jpg",
+      "image": "assets/works/short-14-cover.webp",
       "video": "assets/works/short-14.mp4",
       "frames": [
         "assets/works/short-14-shot-01.jpg",
@@ -461,10 +458,10 @@ window.PORTFOLIO = {
     },
     {
       "id": "short-15",
-      "category": "short",
+      "category": "marketing",
       "kind": "video",
       "title": "场馆开业视频",
-      "image": "assets/works/short-15-shot-02.jpg",
+      "image": "assets/works/short-15-cover.webp",
       "video": "assets/works/short-15.mp4",
       "frames": [
         "assets/works/short-15-shot-01.jpg",
@@ -484,10 +481,10 @@ window.PORTFOLIO = {
     },
     {
       "id": "short-16",
-      "category": "short",
+      "category": "marketing",
       "kind": "video",
       "title": "社区空镜",
-      "image": "assets/works/short-16-shot-02.jpg",
+      "image": "assets/works/short-16-cover.webp",
       "video": "assets/works/short-16.mp4",
       "frames": [
         "assets/works/short-16-shot-01.jpg",
@@ -506,11 +503,126 @@ window.PORTFOLIO = {
       "hoverImage": "assets/works/short-16-shot-03.jpg"
     },
     {
+      "id": "aigc-live",
+      "category": "aigc",
+      "kind": "video",
+      "title": "AI实景合成热点营销",
+      "image": "assets/works/aigc-live-cover.webp",
+      "video": "assets/works/aigc-live.mp4",
+      "frames": [
+        "assets/works/aigc-live-shot-01.webp",
+        "assets/works/aigc-live-shot-02.webp",
+        "assets/works/aigc-live-shot-03.webp"
+      ],
+      "frameTitles": [
+        "",
+        "",
+        ""
+      ],
+      "gallery": [],
+      "portrait": true,
+      "duration": "00:14",
+      "aspect": 0.75,
+      "hoverImage": "assets/works/aigc-live-shot-02.webp"
+    },
+    {
+      "id": "aigc-theater",
+      "category": "aigc",
+      "kind": "video",
+      "title": "AI小剧场",
+      "image": "assets/works/aigc-theater-cover.webp",
+      "video": "assets/works/aigc-theater.mp4",
+      "frames": [
+        "assets/works/aigc-theater-shot-01.webp",
+        "assets/works/aigc-theater-shot-02.webp",
+        "assets/works/aigc-theater-shot-03.webp"
+      ],
+      "frameTitles": [
+        "",
+        "",
+        ""
+      ],
+      "gallery": [],
+      "portrait": false,
+      "duration": "00:52",
+      "aspect": 0.75,
+      "hoverImage": "assets/works/aigc-theater-shot-02.webp"
+    },
+    {
+      "id": "short-01",
+      "category": "aigc",
+      "kind": "video",
+      "title": "创意广告-《豪好吃时刻》",
+      "image": "assets/works/short-01-cover.webp",
+      "video": "assets/works/short-01.mp4",
+      "frames": [
+        "assets/works/short-01-shot-01.jpg",
+        "assets/works/short-01-shot-02.jpg",
+        "assets/works/short-01-shot-03.jpg"
+      ],
+      "frameTitles": [
+        "",
+        "",
+        ""
+      ],
+      "gallery": [],
+      "portrait": false,
+      "duration": "00:30",
+      "aspect": 1.7778,
+      "hoverImage": "assets/works/short-01-shot-03.jpg"
+    },
+    {
+      "id": "short-05",
+      "category": "aigc",
+      "kind": "video",
+      "title": "创意短视频-《方寸之间》",
+      "image": "assets/works/short-05-cover.webp",
+      "video": "assets/works/short-05.mp4",
+      "frames": [
+        "assets/works/short-05-shot-01.jpg",
+        "assets/works/short-05-shot-02.jpg",
+        "assets/works/short-05-shot-03.jpg"
+      ],
+      "frameTitles": [
+        "",
+        "",
+        ""
+      ],
+      "gallery": [],
+      "portrait": true,
+      "duration": "01:22",
+      "aspect": 0.5604,
+      "hoverImage": "assets/works/short-05-shot-03.jpg"
+    },
+    {
+      "id": "short-10",
+      "category": "aigc",
+      "kind": "video",
+      "title": "AI音乐营销短视频",
+      "image": "assets/works/short-10-cover.webp",
+      "video": "assets/works/short-10.mp4",
+      "frames": [
+        "assets/works/short-10-shot-01.jpg",
+        "assets/works/short-10-shot-02.jpg",
+        "assets/works/short-10-shot-03.jpg"
+      ],
+      "frameTitles": [
+        "",
+        "",
+        ""
+      ],
+      "gallery": [],
+      "portrait": true,
+      "duration": "01:10",
+      "aspect": 0.5604,
+      "hoverImage": "assets/works/short-10-shot-03.jpg"
+    },
+    {
       "id": "design-01",
       "category": "design",
       "kind": "video",
       "title": "H5-《一路光华》",
-      "image": "assets/works/design-01-shot-02.jpg",
+      "image": "assets/works/design-01-cover.webp",
       "video": "assets/works/design-01.mp4",
       "frames": [
         "assets/works/design-01-shot-01.jpg",
