@@ -259,6 +259,7 @@ function renderSequence(progress) {
 }
 function goToSequence(index) {
   const target = Math.min(2, Math.max(0, index));
+  renderSequence(target);
   window.scrollTo({ top: sequence.offsetTop + (sequence.offsetHeight - innerHeight) * (target / 2), behavior: 'instant' });
 }
 $$('.sequence-tabs button').forEach((button, index) => {
@@ -331,6 +332,27 @@ function scheduleScrollState() {
   scrollFrame = requestAnimationFrame(() => { scrollFrame = 0; updateScrollState(); });
 }
 window.addEventListener('scroll', scheduleScrollState, { passive: true });
+let sequenceWheelTimer;
+let sequenceWheelLocked = false;
+window.addEventListener('wheel', event => {
+  if (event.ctrlKey || document.body.classList.contains('intro-active') || dialog.open || lightbox.open) return;
+  if (Math.abs(event.deltaY) < 3 || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+  const y = scrollY;
+  if (y < sequenceTop - 2 || y > sequenceTop + sequenceTravel + 2) return;
+  if (sequenceWheelLocked) {
+    event.preventDefault();
+    clearTimeout(sequenceWheelTimer);
+    sequenceWheelTimer = setTimeout(() => { sequenceWheelLocked = false; }, 240);
+    return;
+  }
+  const direction = Math.sign(event.deltaY);
+  const current = Math.round((y - sequenceTop) / sequenceTravel * 2);
+  if ((current === 0 && direction < 0) || (current === 2 && direction > 0)) return;
+  event.preventDefault();
+  sequenceWheelLocked = true;
+  goToSequence(current + direction);
+  sequenceWheelTimer = setTimeout(() => { sequenceWheelLocked = false; }, 240);
+}, { passive: false });
 function snapSequence() {
   if (document.body.classList.contains('intro-active')) return;
   const y = scrollY;
@@ -338,7 +360,7 @@ function snapSequence() {
   const index = Math.round((y - sequenceTop) / sequenceTravel * 2);
   const target = sequenceTop + sequenceTravel * index / 2;
   if (Math.abs(target - y) < 3) return;
-  window.scrollTo({ top: target, behavior: reducedMotion.matches ? 'instant' : 'smooth' });
+  window.scrollTo({ top: target, behavior: 'instant' });
 }
 if ('onscrollend' in window) window.addEventListener('scrollend', snapSequence);
 else {
