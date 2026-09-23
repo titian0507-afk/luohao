@@ -174,3 +174,18 @@ main,footer{position:relative;z-index:1}
 @media(max-width:700px){.sequence-panel .panel-frame{font-size:19vw;top:17%}.panel-caption{left:25px;bottom:94px}.panel-caption h2{font-size:30px}.sequence-stage .stage-caption{left:25px;right:auto;bottom:25px}.related-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 14px}.related-item img{height:140px}.detail-related{margin-top:65px}.gallery-zoom{opacity:1;width:34px;height:34px;font-size:20px}.h5-gallery{height:68vh;padding:10px}#image-lightbox[open]{grid-template-columns:35px minmax(0,1fr) 35px;gap:2px;padding:10px}.lightbox-prev,.lightbox-next{width:34px;height:34px}}
 @media(hover:none){.ambient-grid{display:none}}
 @media(prefers-reduced-motion:reduce){.gallery-slide,.project-image.gallery-preview img{transition:none!important}}
+
+/* Lightweight horizontal filmstrip: one compositor transform per scroll frame. */
+.sequence-stage{transform:none!important;transition:none!important;contain:paint}
+.sequence-stage .frame-guides{display:none}
+.sequence-panels{inset:0 auto 0 0;width:300%;height:100%;display:flex;overflow:visible;transform:translate3d(0,0,0);will-change:transform}
+.sequence-slide{position:relative;flex:0 0 33.333333%;width:33.333333%;height:100%;overflow:hidden;background:#1b1b1b;isolation:isolate}
+.sequence-image{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover}
+.sequence-slide::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,#0009,transparent 40%),linear-gradient(90deg,#0003,transparent 35%);pointer-events:none}
+.sequence-slide:not(:first-child)::before{content:"";position:absolute;top:0;bottom:0;left:0;width:22px;z-index:2;background:linear-gradient(90deg,#0008,transparent);pointer-events:none}
+.sequence-slide-caption{position:absolute;z-index:3;left:4%;bottom:32px;text-shadow:0 1px 20px #000a}
+.sequence-slide-caption .label{color:#e3e2dd}
+.sequence-slide-caption h2{font:italic clamp(40px,4.6vw,76px)/1.1 var(--serif);margin:13px 0 0}
+.sequence-tabs button[aria-selected=true]{transform:none}
+.page-progress i{left:0;will-change:transform}
+@media(max-width:700px){.sequence-slide-caption{left:25px;bottom:96px}.sequence-slide-caption h2{font-size:35px}.sequence-stage .stage-caption{bottom:24px}}

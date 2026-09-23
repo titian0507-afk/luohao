@@ -225,34 +225,32 @@ function layoutProjects() {
   container.style.height = `${Math.max(0, ...heights) - (visible.length ? (width < 600 ? 32 : 60) : 0)}px`;
 }
 $$('.filters button').forEach(button => button.addEventListener('click', () => filterProjects(button.dataset.filter)));
-const stage = $('.sequence-stage');
 const featuredIds = ['interview-04', 'short-01', 'design-ip'];
-const sequencePanels = data.categories.map((category, index) => {
+const sequenceTrack = $('#sequence-panels');
+data.categories.forEach((category, index) => {
   const project = data.projects.find(item => item.id === featuredIds[index]);
-  const panel = element('div', 'sequence-panel');
-  panel.style.backgroundImage = project?.image ? `url("${project.image}")` : '';
-  panel.append(element('span', 'panel-frame', `FRAME ${String(index + 1).padStart(2, '0')}`));
-  const caption = element('div', 'panel-caption');
-  caption.append(element('span', 'label', category.english), element('h2', '', category.name));
-  panel.append(caption);
-  $('#sequence-panels').append(panel);
-  return panel;
+  const slide = element('article', 'sequence-slide');
+  if (project?.image) {
+    const image = media(project.image);
+    image.className = 'sequence-image'; image.loading = 'eager'; image.alt = '';
+    slide.append(image);
+  }
+  const caption = element('div', 'sequence-slide-caption');
+  caption.append(element('span', 'label', `${String(index + 1).padStart(2, '0')} / 03 — ${category.english}`), element('h2', '', category.name));
+  slide.append(caption);
+  sequenceTrack.append(slide);
 });
+let renderedSequencePosition = -1;
+let renderedSequenceIndex = -1;
 function renderSequence(progress) {
   const position = Math.min(2, Math.max(0, progress));
+  if (Math.abs(position - renderedSequencePosition) > .0005) {
+    sequenceTrack.style.transform = `translate3d(${(-position * 100 / 3).toFixed(4)}%,0,0)`;
+    renderedSequencePosition = position;
+  }
   sequenceIndex = Math.round(position);
-  const base = Math.floor(position);
-  const blend = position - base;
-  sequencePanels.forEach((panel, index) => {
-    const offset = index - position;
-    const imageOpacity = index === base ? 1 : index === base + 1 ? blend : 0;
-    panel.style.opacity = String(imageOpacity);
-    panel.style.transform = `translate3d(${(offset * 8).toFixed(3)}%,0,0) scale(1.08)`;
-    panel.style.zIndex = String(index === base + 1 ? 2 : 1);
-    panel.querySelector('.panel-caption').style.opacity = String(Math.max(0, 1 - Math.abs(offset)));
-    panel.querySelector('.panel-frame').style.opacity = String(Math.max(0, 1 - Math.abs(offset)));
-    panel.setAttribute('aria-hidden', String(Math.abs(offset) > .55));
-  });
+  if (sequenceIndex === renderedSequenceIndex) return;
+  renderedSequenceIndex = sequenceIndex;
   $('#sequence-name').textContent = data.categories[sequenceIndex].name;
   $('#sequence-current').textContent = String(sequenceIndex + 1).padStart(2, '0');
   $$('.sequence-tabs button').forEach((button, index) => {
@@ -301,31 +299,41 @@ const heroTitle = $('#hero-title');
 const heroOutline = $('.outline');
 const sequence = $('#sequence');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-let targetHeroY = 0, currentHeroY = 0;
+let targetHeroY = 0, currentHeroY = 0, heroFrame = 0, scrollFrame = 0;
+let sequenceTop = 0, sequenceTravel = 1, progressWidth = 1;
+function measureScrollGeometry() {
+  sequenceTop = sequence.offsetTop;
+  sequenceTravel = Math.max(1, sequence.offsetHeight - innerHeight);
+  progressWidth = $('.page-progress').clientWidth;
+}
 function updateScrollState() {
-  updateNav();
+  const y = scrollY;
+  const viewport = innerHeight;
   const max = document.documentElement.scrollHeight - innerHeight;
-  const progress = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+  const progress = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+  const sequencePosition = Math.min(2, Math.max(0, (y - sequenceTop) / sequenceTravel * 2));
+  updateNav();
   progressLine.style.transform = `scaleX(${progress})`;
-  progressDot.style.left = `${progress * 100}%`;
-  targetHeroY = Math.min(scrollY, innerHeight) * -.15;
-  const rect = sequence.getBoundingClientRect();
-  const travel = sequence.offsetHeight - innerHeight;
-  const entering = Math.min(1, Math.max(0, (innerHeight - rect.top) / (innerHeight * .9)));
-  stage.style.setProperty('--stage-grow', entering.toFixed(3));
-  const local = travel > 0 ? Math.min(1, Math.max(0, -rect.top / travel)) : 0;
-  renderSequence(local * 2);
+  progressDot.style.transform = `translate3d(${(progressWidth * progress).toFixed(2)}px,-50%,0) translateX(-50%)`;
+  renderSequence(sequencePosition);
+  targetHeroY = Math.min(y, viewport) * -.15;
+  if (!heroFrame && (y < viewport * 1.5 || Math.abs(targetHeroY - currentHeroY) > .25)) heroFrame = requestAnimationFrame(animateHero);
 }
 function animateHero() {
+  heroFrame = 0;
   currentHeroY += (targetHeroY - currentHeroY) * (reducedMotion.matches ? 1 : .075);
+  if (Math.abs(targetHeroY - currentHeroY) < .25) currentHeroY = targetHeroY;
   heroTitle.style.transform = `translate3d(0,${currentHeroY}px,0)`;
   heroOutline.style.transform = `translate3d(0,${currentHeroY * .55}px,0)`;
-  requestAnimationFrame(animateHero);
+  if (currentHeroY !== targetHeroY) heroFrame = requestAnimationFrame(animateHero);
 }
-window.addEventListener('scroll', updateScrollState, { passive: true });
-window.addEventListener('resize', updateScrollState, { passive: true });
-window.addEventListener('resize', () => requestAnimationFrame(layoutProjects), { passive: true });
-updateScrollState(); animateHero();
+function scheduleScrollState() {
+  if (scrollFrame) return;
+  scrollFrame = requestAnimationFrame(() => { scrollFrame = 0; updateScrollState(); });
+}
+window.addEventListener('scroll', scheduleScrollState, { passive: true });
+window.addEventListener('resize', () => { measureScrollGeometry(); scheduleScrollState(); requestAnimationFrame(layoutProjects); }, { passive: true });
+measureScrollGeometry(); updateScrollState();
 const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { $$('.navigation nav a').forEach(a => { if (a.hash === '#' + entry.target.id) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); }); } }), { rootMargin: '-15% 0px -50% 0px' });
 $$('main>section').forEach(section => observer.observe(section));
 const revealObserver = new IntersectionObserver(entries => entries.forEach(entry => {
@@ -351,4 +359,4 @@ $$('.copy-card').forEach(button => button.addEventListener('click', async () => 
   } catch { button.querySelector('.copy-feedback').textContent = '复制失败，请手动复制'; }
 }));
 $('#year').textContent = new Date().getFullYear();
-renderSequence(0); filterProjects('all');
+filterProjects('all');
